@@ -10,8 +10,6 @@ let fancy_symbols_enabled = 0
 
 
 set encoding=utf-8
-let using_neovim = has('nvim')
-let using_vim = !using_neovim
 
 " ============================================================================
 " Vim-plug initialization
@@ -34,8 +32,6 @@ endif
 
 " Obscure hacks done, you can now modify the rest of the config down below
 " as you wish :)
-" IMPORTANT: some things in the config are vim or neovim specific. It's easy
-" to spot, they are inside `if using_vim` or `if using_neovim` blocks.
 
 " ============================================================================
 " Active plugins
@@ -119,9 +115,9 @@ Plug 'myusuf3/numbers.vim'
 " Nice icons in the file explorer and file type status line.
 Plug 'ryanoasis/vim-devicons'
 
-" Consoles as buffers (neovim has its own consoles as buffers)
+" Consoles as buffers
 Plug 'rosenfeld/conque-term'
-" XML/HTML tags navigation (neovim has its own)
+" XML/HTML tags navigation
 Plug 'vim-scripts/matchit.zip'
 
 " Code searcher. If you enable it, you should also configure g:hound_base_url
@@ -144,46 +140,42 @@ endif
 " Vim settings and mappings
 " You can edit them as you wish
 
-if using_vim
-    " A bunch of things that are set by default in neovim, but not in vim
+" no vi-compatible
+set nocompatible
 
-    " no vi-compatible
-    set nocompatible
+" allow plugins by file type (required for plugins!)
+filetype plugin on
+filetype indent on
 
-    " allow plugins by file type (required for plugins!)
-    filetype plugin on
-    filetype indent on
+" always show status bar
+set ls=2
 
-    " always show status bar
-    set ls=2
+" incremental search
+set incsearch
+" highlighted search results
+set hlsearch
 
-    " incremental search
-    set incsearch
-    " highlighted search results
-    set hlsearch
+" syntax highlight on
+syntax on
 
-    " syntax highlight on
-    syntax on
-
-    " better backup, swap and undos storage for vim (nvim has nice ones by
-    " default)
-    set directory=~/.vim/dirs/tmp     " directory to place swap files in
-    set backup                        " make backup files
-    set backupdir=~/.vim/dirs/backups " where to put backup files
-    set undofile                      " persistent undos - undo after you re-open the file
-    set undodir=~/.vim/dirs/undos
-    set viminfo+=n~/.vim/dirs/viminfo
-    " create needed directories if they don't exist
-    if !isdirectory(&backupdir)
-        call mkdir(&backupdir, "p")
-    endif
-    if !isdirectory(&directory)
-        call mkdir(&directory, "p")
-    endif
-    if !isdirectory(&undodir)
-        call mkdir(&undodir, "p")
-    endif
-end
+" better backup, swap and undos storage for vim (nvim has nice ones by
+" default)
+set directory=~/.vim/dirs/tmp     " directory to place swap files in
+set backup                        " make backup files
+set backupdir=~/.vim/dirs/backups " where to put backup files
+set undofile                      " persistent undos - undo after you re-open the file
+set undodir=~/.vim/dirs/undos
+set viminfo+=n~/.vim/dirs/viminfo
+" create needed directories if they don't exist
+if !isdirectory(&backupdir)
+    call mkdir(&backupdir, "p")
+endif
+if !isdirectory(&directory)
+    call mkdir(&directory, "p")
+endif
+if !isdirectory(&undodir)
+    call mkdir(&undodir, "p")
+endif
 
 " tabs and spaces handling
 set expandtab
@@ -198,7 +190,7 @@ set nu
 set fillchars+=vert:\
 
 " use 256 colors when possible
-if has('gui_running') || using_neovim || (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256')
+if has('gui_running') || (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256')
     if !has('gui_running')
         let &t_Co = 256
     endif
