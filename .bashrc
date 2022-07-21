@@ -95,7 +95,7 @@ alias v=vim
 alias vb='vim ~/.bashrc'
 alias vv='vim ~/.vimrc'
 alias py='python3'
-
+alias vt='vim test.py'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

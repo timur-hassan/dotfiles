@@ -432,11 +432,29 @@ endif
 
 
 " My configs
+:nnoremap <silent> <CR> :nohlsearch<CR><CR>
+
+" Close runner pane on exit
+let g:VimuxCloseOnExit = 1
+
 " Leader key
-let mapleader = ","
+let maplocalleader = ","
 
 " Vimux config
 " Run the current file with python3
-map <Leader>vp :call VimuxRunCommand("clear; python3 " . bufname("%"))<CR>
+map <LocalLeader>vp :call VimuxRunCommand("clear; python3 " . bufname("%"))<CR>
+autocmd FileType python :call VimuxOpenRunner() 
+autocmd FileType python :call VimuxRunCommand("python3") 
 
+function! VimuxSlime()
+  call VimuxRunCommand(@v)
+endfunction
 
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
+
+" Select current paragraph and send it to tmux
+nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
+" Close runner
+map <LocalLeader>vq :VimuxCloseRunner<CR>
