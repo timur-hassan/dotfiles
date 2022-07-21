@@ -5,7 +5,11 @@
 " To use fancy symbols wherever possible, change this setting from 0 to 1
 " and use a font from https://github.com/ryanoasis/nerd-fonts in your terminal
 " (if you aren't using one of those fonts, you will see funny characters here.
-" Turst me, they look nice when using one of those fonts).
+" Trust me, they look nice when using one of those fonts).
+"
+" Modified by Timur Hassan
+" * removed neovim parts
+" * added Vimux plugin
 let fancy_symbols_enabled = 0
 
 
@@ -119,6 +123,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'rosenfeld/conque-term'
 " XML/HTML tags navigation
 Plug 'vim-scripts/matchit.zip'
+" Vimux for tmux integration
+Plug 'preservim/vimux'
 
 " Code searcher. If you enable it, you should also configure g:hound_base_url
 " and g:hound_port, pointing to your hound instance
@@ -423,3 +429,14 @@ let custom_configs_path = "~/.vim/custom.vim"
 if filereadable(expand(custom_configs_path))
   execute "source " . custom_configs_path
 endif
+
+
+" My configs
+" Leader key
+let mapleader = ","
+
+" Vimux config
+" Run the current file with python3
+map <Leader>vp :call VimuxRunCommand("clear; python3 " . bufname("%"))<CR>
+
+
