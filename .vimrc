@@ -9,7 +9,8 @@
 "
 " Modified by Timur Hassan
 " * removed neovim parts
-" * added Vimux plugin
+" * commented out YankRing due to keymap clash
+" * added Vimux plugin and config
 let fancy_symbols_enabled = 0
 
 
@@ -81,7 +82,7 @@ Plug 'Shougo/context_filetype.vim'
 " from this plugin is disabled
 Plug 'davidhalter/jedi-vim'
 " Automatically close parenthesis, etc
-Plug 'Townk/vim-autoclose'
+"Plug 'Townk/vim-autoclose'
 " Surround
 Plug 'tpope/vim-surround'
 " Indent text object
@@ -107,7 +108,7 @@ Plug 'tpope/vim-fugitive'
 " Git/mercurial/others diff icons on the side of the file lines
 Plug 'mhinz/vim-signify'
 " Yank history navigation
-Plug 'vim-scripts/YankRing.vim'
+" Plug 'vim-scripts/YankRing.vim' " Commented out by TH
 " Linters
 Plug 'neomake/neomake'
 " Relative numbering of lines (0 is the current line)
@@ -230,7 +231,7 @@ imap <M-Left> <ESC>:tabp<CR>
 set scrolloff=3
 
 " clear search results
-nnoremap <silent> // :noh<CR>
+"nnoremap <silent> // :noh<CR> " removed, causes delay for /
 
 " clear empty spaces at the end of lines on save of python files
 autocmd BufWritePre *.py :%s/\s\+$//e
@@ -441,20 +442,30 @@ let g:VimuxCloseOnExit = 1
 let maplocalleader = ","
 
 " Vimux config
-" Run the current file with python3
-map <LocalLeader>vp :call VimuxRunCommand("clear; python3 " . bufname("%"))<CR>
+" Autocmd to start REPL and open python
+" KLUGE to remove error messages probable cause when REPL runs autocmd
 autocmd FileType python :call VimuxOpenRunner() 
 autocmd FileType python :call VimuxRunCommand("python3") 
+autocmd FileType python :call VimuxRunCommand("import os") 
+autocmd FileType python :call VimuxRunCommand("os.system('clear')") 
 
-function! VimuxSlime()
-  call VimuxRunCommand(@v)
-endfunction
+
+" Run the current file with python3
+map <LocalLeader>vp :call VimuxRunCommand("clear; python3 " . bufname("%"))<CR>
+
+"function! VimuxSlime()
+"  call VimuxRunCommand(@v)
+"  call VimuxSendKeys("Enter")
+"endfunction
 
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
 
 " Select current paragraph and send it to tmux
 nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
+" Vimux Orientation
+let g:VimuxOrientation = "h"
 
 " Close runner
 map <LocalLeader>vq :VimuxCloseRunner<CR>

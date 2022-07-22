@@ -121,10 +121,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
-setxkbmap -option caps:ctrl_modifier -option grp:shifts_toggle
+#setxkbmap -option caps:ctrl_modifier -option grp:shifts_toggle
 
 # Remove previously running instances
-xcape -e 'Caps_Lock=Escape'
+#xcape -e 'Caps_Lock=Escape'
+
 PATH="$HOME/.local/bin:$PATH"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
