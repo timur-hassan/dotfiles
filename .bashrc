@@ -90,12 +90,15 @@ fi
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
+alias ld="ls -l | egrep '^d'"
 alias l='ls -CF'
-alias v=vim
-alias vb='vim ~/.bashrc'
-alias vv='vim ~/.vimrc'
+alias v=nvim
+alias vb='nvim ~/.bashrc'
+alias vv='nvim ~/.vimrc'
 alias py='python3'
-alias vt='vim test.py'
+alias vx='nvim x.py'
+alias n='gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true'
+alias no='gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled false'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -121,10 +124,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#setxkbmap -option caps:ctrl_modifier -option grp:shifts_toggle
+setxkbmap -option caps:ctrl_modifier -option grp:shifts_toggle
 
 # Remove previously running instances
-#xcape -e 'Caps_Lock=Escape'
+xcape -e 'Caps_Lock=Escape'
 
 PATH="$HOME/.local/bin:$PATH"
 
